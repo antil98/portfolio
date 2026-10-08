@@ -1,0 +1,39 @@
+---
+import { BadgeCheck, Car, GraduationCap, Languages } from '@lucide/astro';
+import Section from './ui/Section.astro';
+import T from './ui/T.astro';
+import { education, extras, languages } from '../data/education';
+---
+
+<Section id="education" index="04" icon={GraduationCap} title="nav.education" subtitle="education.subtitle">
+  <div class="grid gap-5 lg:grid-cols-5">
+    <ul class="space-y-4 lg:col-span-3">
+      {education.map((item) => (
+        <li class="reveal card flex gap-4 p-5">
+          <span class="grid size-11 shrink-0 place-items-center rounded-xl bg-accent/12 text-accent"><GraduationCap size={22} /></span>
+          <div>
+            <T as="h3" block text={item.title} class="font-display text-lg font-semibold leading-snug" />
+            <p class="mt-1 text-sm text-muted">{item.school}</p>
+            <p class="mt-2 font-mono text-xs text-accent"><T text={item.period} /></p>
+          </div>
+        </li>
+      ))}
+    </ul>
+
+    <aside class="reveal card space-y-6 p-6 lg:col-span-2">
+      <h3 class="flex items-center gap-2 font-display text-lg font-semibold"><Languages size={18} class="text-accent" /><T k="education.extras" /></h3>
+      <ul class="space-y-3">
+        {languages.map((lang) => (
+          <li class="flex items-center justify-between gap-3 border-b border-line pb-3 last:border-0 last:pb-0">
+            <T text={lang.name} class="font-medium" />
+            <T text={lang.level} class="rounded-full border border-line px-2.5 py-0.5 font-mono text-xs text-muted" />
+          </li>
+        ))}
+      </ul>
+      <div class="space-y-3 text-sm text-muted">
+        <p class="flex items-start gap-3"><Car size={18} class="mt-0.5 shrink-0 text-accent" /><T as="span" block text={extras.licence} /></p>
+        <p class="flex items-start gap-3"><BadgeCheck size={18} class="mt-0.5 shrink-0 text-accent" /><T as="span" block text={extras.certificate} /></p>
+      </div>
+    </aside>
+  </div>
+</Section>

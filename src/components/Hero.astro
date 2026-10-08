@@ -1,0 +1,60 @@
+---
+import { ArrowDown, Command, Send } from '@lucide/astro';
+import T from './ui/T.astro';
+import Brand from './ui/Brand.astro';
+import AvailableBadge from './AvailableBadge.astro';
+import { profile } from '../data/profile';
+---
+
+<section id="top" data-section class="mx-auto grid min-h-dvh max-w-6xl items-center gap-12 px-5 pb-16 pt-36 lg:grid-cols-[1.15fr_0.85fr]">
+  <div>
+    {profile.availableForHire && <div class="reveal"><AvailableBadge /></div>}
+
+    <h1 class="reveal mt-6 font-display font-semibold leading-[0.92] tracking-tight text-[clamp(3.4rem,11vw,7.5rem)]">
+      Antonio<br /><span class="text-outline">Iliyanov</span>
+    </h1>
+
+    <T as="p" block k="hero.role" class="reveal mt-6 font-mono text-sm uppercase tracking-widest text-accent sm:text-base" />
+    <T as="p" block k="hero.lede" class="reveal mt-5 max-w-xl text-lg leading-relaxed text-muted" />
+
+    <div class="reveal mt-8 flex flex-wrap items-center gap-3">
+      <a href="#projects" class="btn btn-primary"><ArrowDown size={16} /><T k="hero.ctaWork" /></a>
+      <a href="#contact" class="btn"><Send size={16} /><T k="hero.ctaContact" /></a>
+      <a href={profile.social.github} target="_blank" rel="noopener noreferrer" class="btn" aria-label="GitHub">
+        <Brand name="github" class="text-[1.15em]" />
+      </a>
+      {profile.social.linkedin && (
+        <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" class="btn" aria-label="LinkedIn">
+          <Brand name="linkedin" class="text-[1.15em]" />
+        </a>
+      )}
+    </div>
+
+    <button type="button" data-palette-open class="reveal mt-6 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-ink">
+      <Command size={15} /><T k="hero.hint" /><kbd class="kbd"><span data-mod>Ctrl</span>&nbsp;K</kbd>
+    </button>
+  </div>
+
+  <!-- Terminal card -->
+  <div class="reveal card overflow-hidden font-mono text-[0.82rem] leading-7 shadow-2xl shadow-black/10">
+    <div class="flex items-center gap-2 border-b border-line px-4 py-3">
+      <span class="size-3 rounded-full bg-[#ff5f57]"></span>
+      <span class="size-3 rounded-full bg-[#febc2e]"></span>
+      <span class="size-3 rounded-full bg-[#28c840]"></span>
+      <span class="ml-3 text-xs text-muted">~/antonio — zsh</span>
+    </div>
+    <div class="space-y-0.5 p-5">
+      <p><span class="text-accent">❯</span> whoami</p>
+      <T as="p" block k="term.who" class="pl-4" />
+      <p class="pt-2"><span class="text-accent">❯</span> pwd</p>
+      <p class="pl-4">{profile.location}</p>
+      <p class="pt-2"><span class="text-accent">❯</span> ls ./stack</p>
+      <p class="flex flex-wrap gap-x-4 pl-4 text-[var(--c-web)]"><span>next.js</span><span>postgresql</span><span>tailwind</span><span class="text-[var(--c-sys)]">linux</span></p>
+      <p class="pt-2"><span class="text-accent">❯</span> cat ./now</p>
+      <T as="p" block k="term.study" class="pl-4" />
+      <p class="pt-2"><span class="text-accent">❯</span> echo $LANGUAGES</p>
+      <T as="p" block k="term.langs" class="pl-4" />
+      <p class="pt-2"><span class="text-accent">❯</span> <span class="caret"></span></p>
+    </div>
+  </div>
+</section>

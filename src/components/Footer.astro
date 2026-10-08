@@ -1,0 +1,10 @@
+---
+import { ArrowUp } from '@lucide/astro';
+import T from './ui/T.astro';
+import { profile } from '../data/profile';
+---
+
+<footer class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 border-t border-line px-5 py-8 text-sm text-muted">
+  <p>© {new Date().getFullYear()} {profile.name} · <T k="footer.built" /></p>
+  <a href="#top" class="inline-flex items-center gap-2 transition-colors hover:text-ink"><ArrowUp size={16} /><T k="footer.top" /></a>
+</footer>

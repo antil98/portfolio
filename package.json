@@ -1,0 +1,28 @@
+{
+  "name": "antonio-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "latest",
+    "@fontsource-variable/inter": "latest",
+    "@fontsource-variable/jetbrains-mono": "latest",
+    "@fortawesome/fontawesome-svg-core": "latest",
+    "@fortawesome/free-brands-svg-icons": "latest",
+    "@lucide/astro": "latest",
+    "@tailwindcss/vite": "^4.1.0",
+    "astro": "^7.3.1",
+    "tailwindcss": "^4.1.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "latest",
+    "typescript": "^5.6.0"
+  }
+}

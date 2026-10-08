@@ -1,0 +1,17 @@
+---
+/**
+ * Spam-proof text: the HTML contains the REVERSED string and CSS
+ * (`unicode-bidi: bidi-override; direction: rtl`) renders it the right way round.
+ * Scrapers see `em.notorp@89lita`; people see the real address.
+ */
+interface Props {
+  value: string;
+  kind: 'email' | 'phone';
+  class?: string;
+}
+
+const { value, kind, class: className } = Astro.props;
+const reversed = [...value].reverse().join('');
+---
+
+<span class:list={['reverse-text', className]} data-contact={kind}>{reversed}</span>

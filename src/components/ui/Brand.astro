@@ -1,0 +1,21 @@
+---
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+
+/** Font Awesome brand icons, rendered to inline SVG at build time (no runtime JS/CSS). */
+const brands = { github: faGithub, linkedin: faLinkedin } as const;
+
+interface Props {
+  name: keyof typeof brands;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const svg = icon(brands[name])!.html.join('');
+---
+
+<span
+  class:list={['inline-block size-[1.1em] shrink-0 [&>svg]:size-full [&>svg]:fill-current', className]}
+  aria-hidden="true"
+  set:html={svg}
+/>

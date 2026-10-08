@@ -1,0 +1,40 @@
+---
+import { Search } from '@lucide/astro';
+import T from './ui/T.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import type { UiKey } from '../i18n';
+
+const links: { id: string; label: UiKey }[] = [
+  { id: 'skills', label: 'nav.skills' },
+  { id: 'experience', label: 'nav.experience' },
+  { id: 'projects', label: 'nav.projects' },
+  { id: 'education', label: 'nav.education' },
+  { id: 'contact', label: 'nav.contact' },
+];
+---
+
+<header class="fixed inset-x-0 top-0 z-40 px-3 pt-3">
+  <div class="card mx-auto flex max-w-6xl items-center justify-between gap-2 rounded-full px-3 py-2">
+    <a href="#top" class="flex items-center gap-2.5 font-display font-semibold" aria-label="Antonio Iliyanov">
+      <span class="grid size-8 place-items-center rounded-full bg-accent text-sm font-bold text-accent-ink">AI</span>
+      <span class="hidden sm:inline">Antonio</span>
+    </a>
+
+    <nav class="hidden items-center md:flex" aria-label="Main">
+      {links.map(({ id, label }) => (
+        <a href={`#${id}`} data-nav={id} class="nav-link"><T k={label} /></a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button type="button" data-palette-open class="btn !gap-2 !px-3 !py-1.5 !text-xs" aria-haspopup="dialog">
+        <Search size={15} />
+        <T k="cmd.search" class="hidden lg:inline-grid" />
+        <kbd class="kbd hidden sm:inline-flex"><span data-mod>Ctrl</span>&nbsp;K</kbd>
+      </button>
+      <LangToggle />
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

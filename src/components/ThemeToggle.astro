@@ -1,0 +1,19 @@
+---
+import { Monitor, Moon, Sun } from '@lucide/astro';
+import T from './ui/T.astro';
+
+const options = [
+  { value: 'light', icon: Sun, label: 'theme.light' },
+  { value: 'dark', icon: Moon, label: 'theme.dark' },
+  { value: 'system', icon: Monitor, label: 'theme.system' },
+] as const;
+---
+
+<div class="seg" role="group">
+  {options.map(({ value, icon: IconComponent, label }) => (
+    <button type="button" class="seg-btn" data-theme-set={value} aria-pressed="false">
+      <IconComponent size={15} />
+      <T k={label} class="sr-only" />
+    </button>
+  ))}
+</div>

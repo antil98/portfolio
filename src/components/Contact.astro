@@ -1,0 +1,51 @@
+---
+import { Copy, Download, Mail, MapPin, Phone, Send } from '@lucide/astro';
+import Section from './ui/Section.astro';
+import T from './ui/T.astro';
+import Brand from './ui/Brand.astro';
+import ReverseText from './ui/ReverseText.astro';
+import { profile } from '../data/profile';
+---
+
+<Section id="contact" index="05" icon={Send} title="nav.contact" subtitle="contact.subtitle">
+  <div class="grid gap-5 lg:grid-cols-5">
+    <div class="reveal card flex flex-col justify-between gap-8 p-7 md:p-9 lg:col-span-3">
+      <T as="p" block k="contact.headline" class="font-display text-3xl font-semibold leading-tight tracking-tight md:text-4xl" />
+      <div class="flex flex-wrap gap-3">
+        <button type="button" class="btn btn-primary" data-contact-open="email"><Mail size={16} /><T k="contact.write" /></button>
+        <a class="btn" href={profile.cvPath} download data-cv><Download size={16} /><T k="contact.cv" /></a>
+        <a class="btn" href={profile.social.github} target="_blank" rel="noopener noreferrer" data-github><Brand name="github" />GitHub</a>
+        {profile.social.linkedin && (
+          <a class="btn" href={profile.social.linkedin} target="_blank" rel="noopener noreferrer"><Brand name="linkedin" />LinkedIn</a>
+        )}
+      </div>
+    </div>
+
+    <ul class="reveal card divide-y divide-line lg:col-span-2">
+      <li class="flex items-center gap-4 p-5">
+        <Mail size={20} class="shrink-0 text-accent" />
+        <div class="min-w-0 flex-1">
+          <T k="contact.email" class="block font-mono text-xs uppercase tracking-wider text-muted" />
+          <ReverseText kind="email" value={profile.email} class="max-w-full break-all font-medium" />
+        </div>
+        <button type="button" class="seg-btn !h-9 !min-w-9" data-contact-copy="email" title="Copy / Copiar"><Copy size={16} /><T k="contact.copy" class="sr-only" /></button>
+      </li>
+      <li class="flex items-center gap-4 p-5">
+        <Phone size={20} class="shrink-0 text-accent" />
+        <div class="min-w-0 flex-1">
+          <T k="contact.phone" class="block font-mono text-xs uppercase tracking-wider text-muted" />
+          <ReverseText kind="phone" value={profile.phone} class="font-medium" />
+        </div>
+        <button type="button" class="seg-btn !h-9 !min-w-9" data-contact-copy="phone" title="Copy / Copiar"><Copy size={16} /><T k="contact.copy" class="sr-only" /></button>
+      </li>
+      <li class="flex items-center gap-4 p-5">
+        <MapPin size={20} class="shrink-0 text-accent" />
+        <div>
+          <T k="contact.location" class="block font-mono text-xs uppercase tracking-wider text-muted" />
+          <span class="font-medium">{profile.location}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <T as="p" block k="contact.shield" class="reveal mt-5 text-xs text-muted" />
+</Section>

@@ -1,0 +1,49 @@
+---
+import { Briefcase, Building2, CalendarDays } from '@lucide/astro';
+import Section from './ui/Section.astro';
+import T from './ui/T.astro';
+import { experience } from '../data/experience';
+---
+
+<Section id="experience" index="02" icon={Briefcase} title="nav.experience" subtitle="exp.subtitle">
+  <ol class="relative before:absolute before:bottom-2 before:left-[0.65rem] before:top-2 before:w-px before:bg-gradient-to-b before:from-accent before:via-line before:to-transparent md:before:left-[1.15rem]">
+    {experience.map((job, i) => {
+      const current = i === 0;
+      return (
+        <li class="reveal relative pb-8 pl-10 last:pb-0 md:pl-16">
+          <span class="absolute left-[0.65rem] top-7 -translate-x-1/2 md:left-[1.15rem]" aria-hidden="true">
+            {current ? (
+              <span class="relative flex size-4">
+                <span class="absolute inline-flex size-full rounded-full bg-accent opacity-70 motion-safe:animate-ping"></span>
+                <span class="relative inline-flex size-4 rounded-full bg-accent ring-4 ring-bg"></span>
+              </span>
+            ) : (
+              <span class="block size-3 rounded-full border-2 border-muted bg-bg"></span>
+            )}
+          </span>
+
+          <article class="card p-5 md:p-6">
+            <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-muted">
+              <span class="inline-flex items-center gap-1.5"><CalendarDays size={14} /><T text={job.period} /></span>
+              {current && (
+                <span class="rounded-full bg-accent/15 px-2.5 py-0.5 font-semibold uppercase tracking-wider text-accent">
+                  <T k="exp.latest" />
+                </span>
+              )}
+            </div>
+            <T as="h3" block text={job.role} class="mt-3 font-display text-2xl font-semibold tracking-tight" />
+            <p class="mt-1 inline-flex items-center gap-2 font-medium text-accent"><Building2 size={16} />{job.org}</p>
+            <ul class="mt-4 space-y-2 text-muted">
+              {job.bullets.map((bullet) => (
+                <li class="flex gap-3">
+                  <span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-accent/70"></span>
+                  <T as="span" block text={bullet} />
+                </li>
+              ))}
+            </ul>
+          </article>
+        </li>
+      );
+    })}
+  </ol>
+</Section>

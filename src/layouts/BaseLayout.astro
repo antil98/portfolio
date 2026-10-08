@@ -1,0 +1,99 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+
+import Background from '../components/Background.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CommandPalette from '../components/CommandPalette.astro';
+import Toast from '../components/Toast.astro';
+import { l } from '../i18n';
+
+const title = l('meta.title');
+const description = l('meta.description');
+---
+
+<!doctype html>
+<html lang="en" data-lang="en" data-theme="system">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title data-en={title.en} data-es={title.es}>{title.en}</title>
+    <meta name="description" content={description.en} data-en={description.en} data-es={description.es} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!--
+      Runs before first paint: resolves theme (default: system) and language
+      (default: browser/OS) so there is no flash and no layout shift.
+    -->
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const read = (k) => { try { return localStorage.getItem(k); } catch { return null; } };
+        const write = (k, v) => { try { localStorage.setItem(k, v); } catch {} };
+        const media = matchMedia('(prefers-color-scheme: dark)');
+        const THEMES = ['light', 'dark', 'system'];
+        const LANGS = ['en', 'es'];
+
+        const detectLang = () => {
+          const prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+          for (const tag of prefs) {
+            const code = String(tag).slice(0, 2).toLowerCase();
+            if (LANGS.includes(code)) return code;
+          }
+          return 'en';
+        };
+
+        const applyTheme = (pref) => {
+          if (!THEMES.includes(pref)) pref = 'system';
+          const dark = pref === 'dark' || (pref === 'system' && media.matches);
+          root.classList.toggle('dark', dark);
+          root.style.colorScheme = dark ? 'dark' : 'light';
+          root.dataset.theme = pref;
+          return pref;
+        };
+
+        const applyLang = (lang) => {
+          if (!LANGS.includes(lang)) lang = detectLang();
+          root.lang = lang;
+          root.dataset.lang = lang;
+          const title = document.querySelector('title');
+          const desc = document.querySelector('meta[name="description"]');
+          if (title && title.dataset[lang]) document.title = title.dataset[lang];
+          if (desc && desc.dataset[lang]) desc.setAttribute('content', desc.dataset[lang]);
+          return lang;
+        };
+
+        const notify = () => document.dispatchEvent(new CustomEvent('prefs:change'));
+
+        const prefs = {
+          theme: applyTheme(read('theme')),
+          lang: applyLang(read('lang')),
+          setTheme(theme) { prefs.theme = applyTheme(theme); write('theme', prefs.theme); notify(); },
+          setLang(lang) { prefs.lang = applyLang(lang); write('lang', prefs.lang); notify(); },
+        };
+
+        media.addEventListener('change', () => { if (prefs.theme === 'system') applyTheme('system'); });
+        root.classList.add('js');
+        window.__prefs = prefs;
+      })();
+    </script>
+  </head>
+
+  <body class="min-h-dvh bg-bg font-sans text-ink antialiased">
+    <Background />
+    <Header />
+    <main><slot /></main>
+    <Footer />
+    <CommandPalette />
+    <Toast />
+
+    <script>
+      import '../scripts/ui';
+      import '../scripts/palette';
+    </script>
+  </body>
+</html>

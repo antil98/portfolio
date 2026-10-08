@@ -1,0 +1,21 @@
+---
+import { l, type L, type UiKey } from '../../i18n';
+
+/**
+ * Renders BOTH languages stacked in one grid cell; CSS shows the active one.
+ * The wrapper is always as large as the longest translation → zero layout shift.
+ */
+interface Props {
+  k?: UiKey;
+  text?: L;
+  as?: string;
+  block?: boolean;
+  class?: string;
+}
+
+const { k, text, as: Tag = 'span', block = false, class: className } = Astro.props;
+const value = text ?? (k ? l(k) : undefined);
+if (!value) throw new Error('<T> needs either `k` or `text`.');
+---
+
+<Tag class:list={['i18n', block && 'i18n-block', className]}><span data-l="en" lang="en">{value.en}</span><span data-l="es" lang="es">{value.es}</span></Tag>

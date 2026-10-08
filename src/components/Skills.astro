@@ -1,0 +1,80 @@
+---
+import { Layers } from '@lucide/astro';
+import Section from './ui/Section.astro';
+import T from './ui/T.astro';
+import { places, skills, type SkillGroup } from '../data/skills';
+import { l, type UiKey } from '../i18n';
+
+const filters: { value: 'all' | SkillGroup; label: UiKey }[] = [
+  { value: 'all', label: 'skills.all' },
+  { value: 'web', label: 'skills.web' },
+  { value: 'sys', label: 'skills.sys' },
+  { value: 'ai', label: 'skills.ai' },
+];
+const count = (g: string) => (g === 'all' ? skills.length : skills.filter((s) => s.group === g).length);
+---
+
+<Section id="skills" index="01" icon={Layers} title="nav.skills" subtitle="skills.subtitle">
+  <div data-skills>
+    <div class="reveal mb-6 flex flex-wrap gap-2" role="group">
+      {filters.map(({ value, label }) => (
+        <button type="button" class="filter-btn" data-filter-btn={value} aria-pressed={value === 'all'}>
+          {value !== 'all' && <span class="size-2 rounded-full" style={`background: var(--c-${value})`}></span>}
+          <T k={label} />
+          <span class="font-mono text-xs opacity-60">{count(value)}</span>
+        </button>
+      ))}
+    </div>
+
+    <ul data-grid data-filter="all" class="reveal grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      {skills.map((skill, i) => (
+        <li>
+          <button type="button" class="tile w-full" data-tile data-group={skill.group}>
+            <span class="tile-no">{String(i + 1).padStart(2, '0')}</span>
+            <span class="tile-sym">{skill.symbol}</span>
+            <T as="span" block text={skill.name} class="tile-name" />
+            <span data-detail hidden>
+              <span class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <T text={skill.name} class="font-display text-2xl font-semibold" />
+                <T k={`skills.${skill.group}` as UiKey} class="font-mono text-xs uppercase tracking-wider" />
+              </span>
+              <span class="mt-2 block text-sm text-muted">
+                {skill.foundIn.length > 0
+                  ? <><T k="skills.foundIn" />: {skill.foundIn.map((id) => places[id]).join(' · ')}</>
+                  : <T k="skills.core" />}
+              </span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+
+    <div data-readout aria-live="polite" class="reveal card mt-4 min-h-28 p-5">
+      <T k="skills.hint" class="text-sm text-muted" />
+    </div>
+  </div>
+</Section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-skills]');
+  if (root) {
+    const grid = root.querySelector<HTMLElement>('[data-grid]')!;
+    const readout = root.querySelector<HTMLElement>('[data-readout]')!;
+    const buttons = root.querySelectorAll<HTMLButtonElement>('[data-filter-btn]');
+
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        grid.dataset.filter = btn.dataset.filterBtn;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      }),
+    );
+
+    const inspect = (event: Event) => {
+      const tile = (event.target as HTMLElement).closest<HTMLElement>('[data-tile]');
+      const detail = tile?.querySelector('[data-detail]');
+      if (detail) readout.innerHTML = detail.innerHTML;
+    };
+    grid.addEventListener('pointerover', inspect);
+    grid.addEventListener('focusin', inspect);
+  }
+</script>

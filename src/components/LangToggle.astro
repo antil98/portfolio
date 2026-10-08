@@ -1,0 +1,14 @@
+---
+const langs = [
+  { value: 'en', label: 'EN', name: 'English' },
+  { value: 'es', label: 'ES', name: 'Español' },
+] as const;
+---
+
+<div class="seg" role="group" aria-label="Language / Idioma">
+  {langs.map(({ value, label, name }) => (
+    <button type="button" class="seg-btn" data-lang-set={value} aria-pressed="false" title={name} lang={value}>
+      {label}
+    </button>
+  ))}
+</div>
