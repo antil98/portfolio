@@ -46,6 +46,8 @@ export const en = {
   },
   projects: {
     subtitle: 'Selected personal projects built with Next.js and PostgreSQL.',
+    demo: 'Live demo',
+    repository: 'Repository',
   },
   education: {
     subtitle: 'Formal training and the languages I work in.',
@@ -141,6 +143,8 @@ export const es: Dict = {
   },
   projects: {
     subtitle: 'Proyectos personales seleccionados con Next.js y PostgreSQL.',
+    demo: 'Demo en vivo',
+    repository: 'Repositorio',
   },
   education: {
     subtitle: 'Formación reglada y los idiomas con los que trabajo.',

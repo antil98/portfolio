@@ -23,7 +23,7 @@ const links: { id: string; label: UiKey }[] = [
 
     <nav class="hidden items-center md:flex" aria-label="Main">
       {links.map(({ id, label }) => (
-        <a href={`#${id}`} data-nav={id} class="nav-link"><T k={label} /></a>
+        <a href={`#${id}`} data-nav={id} class="nav-link"><T k={label} class="text-center" /></a>
       ))}
     </nav>
 

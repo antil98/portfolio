@@ -13,7 +13,7 @@ import { profile } from '../data/profile';
       <T as="p" block k="contact.headline" class="font-display text-3xl font-semibold leading-tight tracking-tight md:text-4xl" />
       <div class="flex flex-wrap gap-3">
         <button type="button" class="btn btn-primary" data-contact-open="email"><Mail size={16} /><T k="contact.write" /></button>
-        <a class="btn" href={profile.cvPath} download data-cv><Download size={16} /><T k="contact.cv" /></a>
+        <a class="btn" href={profile.cvPath} target="_blank" rel="noopener noreferrer" data-cv><Download size={16} /><T k="contact.cv" /></a>
         <a class="btn" href={profile.social.github} target="_blank" rel="noopener noreferrer" data-github><Brand name="github" />GitHub</a>
         {profile.social.linkedin && (
           <a class="btn" href={profile.social.linkedin} target="_blank" rel="noopener noreferrer"><Brand name="linkedin" />LinkedIn</a>

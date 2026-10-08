@@ -9,7 +9,7 @@ export const profile = {
   phone: '+34 657 39 40 96',
   location: 'Segovia, España',
   availableForHire: true,
-  cvPath: '/Antonio-Iliyanov-CV.pdf',
+  cvPath: 'https://docs.google.com/document/d/14KE-VbWD6drg5yaaNlMoeo8zW7ucHIecdJrmH5v3Sn8/export?format=pdf',
   social: {
     github: 'https://github.com/antil98',
     linkedin: '', // add a URL and the button appears automatically

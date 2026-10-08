@@ -3,26 +3,20 @@ import { ArrowUpRight, FolderGit2 } from '@lucide/astro';
 import Section from './ui/Section.astro';
 import T from './ui/T.astro';
 import Chip from './ui/Chip.astro';
+import Brand from './ui/Brand.astro';
 import { projects } from '../data/projects';
 ---
 
 <Section id="projects" index="03" icon={FolderGit2} title="nav.projects" subtitle="projects.subtitle">
   <div class="grid gap-5 md:grid-cols-2">
     {projects.map((project) => {
-      const Wrapper = project.href ? 'a' : 'div';
       return (
-        <Wrapper
-          href={project.href}
-          target={project.href ? '_blank' : undefined}
-          rel={project.href ? 'noopener noreferrer' : undefined}
-          class="reveal card group flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1"
-        >
+        <article class="reveal card flex flex-col overflow-hidden transition-transform duration-300 hover:-translate-y-1">
           <div class="flex items-center gap-2 border-b border-line bg-surface px-4 py-2.5">
             <span class="size-2.5 rounded-full bg-muted/40"></span>
             <span class="size-2.5 rounded-full bg-muted/40"></span>
             <span class="size-2.5 rounded-full bg-muted/40"></span>
             <span class="ml-2 truncate font-mono text-xs text-muted">{project.path}</span>
-            {project.href && <ArrowUpRight size={16} class="ml-auto text-muted transition-colors group-hover:text-accent" />}
           </div>
           <div class="flex flex-1 flex-col p-6">
             <h3 class="font-display text-2xl font-semibold tracking-tight">{project.name}</h3>
@@ -30,8 +24,22 @@ import { projects } from '../data/projects';
             <div class="mt-5 flex flex-wrap gap-2">
               {project.stack.map((tech) => <Chip>{tech}</Chip>)}
             </div>
+            {(project.demoHref || project.repoHref) && (
+              <div class="mt-6 flex flex-wrap gap-2">
+                {project.demoHref && (
+                  <a class="btn !px-3 !py-2 !text-xs" href={project.demoHref} target="_blank" rel="noopener noreferrer">
+                    <ArrowUpRight size={15} /><T k="projects.demo" />
+                  </a>
+                )}
+                {project.repoHref && (
+                  <a class="btn !px-3 !py-2 !text-xs" href={project.repoHref} target="_blank" rel="noopener noreferrer">
+                    <Brand name="github" /><T k="projects.repository" />
+                  </a>
+                )}
+              </div>
+            )}
           </div>
-        </Wrapper>
+        </article>
       );
     })}
   </div>

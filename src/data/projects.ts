@@ -5,7 +5,8 @@ export interface Project {
   path: string;
   description: L;
   stack: string[];
-  href?: string;
+  demoHref?: string;
+  repoHref?: string;
 }
 
 export const projects: Project[] = [
