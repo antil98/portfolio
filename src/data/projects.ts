@@ -18,6 +18,8 @@ export const projects: Project[] = [
       es: "CRM a medida centrado en simplificar la UI/UX frente a alternativas comerciales o SuiteCRM, con autenticación custom e integración y theming de Shadcn.",
     },
     stack: ["Next.js", "PostgreSQL", "Shadcn"],
+    demoHref: "https://crm-atf.vercel.app",
+    repoHref: "https://github.com/antil98/crm-atf",
   },
   {
     name: "Exavault",
@@ -27,5 +29,7 @@ export const projects: Project[] = [
       es: "Almacenamiento en la nube con gestión completa de archivos, reciclaje y navegación recursiva, con autenticación de Clerk e integración y theming de Shadcn.",
     },
     stack: ["Next.js", "PostgreSQL", "Vercel Blob", "Clerk", "Shadcn"],
+    demoHref: "https://exavault.vercel.app",
+    repoHref: "https://github.com/antil98/exavault",
   },
 ];
